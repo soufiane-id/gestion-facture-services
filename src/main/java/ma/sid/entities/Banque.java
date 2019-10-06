@@ -1,5 +1,7 @@
 package ma.sid.entities;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +26,6 @@ public class Banque {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idBanque;
 	private String nomBanque;
-	private Double soldeDebit;
-	private Double soldeCredit;
+	private BigDecimal soldeDebit;
+	private BigDecimal soldeCredit;
 }

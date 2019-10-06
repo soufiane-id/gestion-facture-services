@@ -28,7 +28,6 @@ public class Reglement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codeReglement;
-	private TypeReglement typeReglement;
 	private BigDecimal montantReglement;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CLIENT_ID", nullable = true)

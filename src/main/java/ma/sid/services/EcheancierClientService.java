@@ -32,6 +32,16 @@ public class EcheancierClientService {
         return echeancierClientRepository.findAll();
     }
 	
+	@GetMapping("/listEcheancierClientNonRegle")
+    List<EcheancierClient> findAllNonRegles() {
+		return echeancierClientRepository.findAllEcheancesNonRegles();
+    }
+	
+	@GetMapping("/listEcheancierClientRegle")
+    List<EcheancierClient> findAllRegles() {
+		return echeancierClientRepository.findAllEcheancesRegles();
+    }
+	
     @PostMapping("/echeancierClients")
     EcheancierClient ajotuerEcheancierClient(@RequestBody EcheancierClient echeancierClient) throws Exception {
     	// Lors de l'ajout, on force le RAP au montant de la facture, en attendant le réglement de l'echeance.
@@ -49,9 +59,14 @@ public class EcheancierClientService {
     	return echeancierClientRepository.save(echeancierClient);
     }
     
+    /**
+     * Recupere les echeancies non reglees d un client.
+     * @param idClient
+     * @return
+     */
     @GetMapping("/getEcheanciersByClient/{idClient}")
     List<EcheancierClient> getEcheanciersByClient(@PathVariable Long idClient){
-    	return findEcheanciersByClient(idClient);
+    	return echeancierClientRepository.getEcheanciersByClient(idClient);
     }
     
     @GetMapping("/getEcheanciersByMontants/{montants}")
@@ -74,19 +89,21 @@ public class EcheancierClientService {
 		return null;
     }
     
-    private List<EcheancierClient> findEcheanciersByClient(Long idClient) {
-    	List<EcheancierClient> result = new ArrayList<>();
-    	EcheancierClient criteria = new EcheancierClient();
-    	Client client = new Client();
-		client.setIdClient(idClient);
-    	criteria.setClient(client);
-		Example<EcheancierClient> echeancierExample = Example.of(criteria);
-		Iterable<EcheancierClient> echeanciers = echeancierClientRepository.findAll(echeancierExample);
-		for (EcheancierClient e : echeanciers) {
-			result.add(e);
-		}
-		return result;
-    }
+    
+//    private List<EcheancierClient> findEcheanciersByClient(Long idClient) {
+//    	List<EcheancierClient> result = new ArrayList<>();
+//    	EcheancierClient criteria = new EcheancierClient();
+//    	Client client = new Client();
+//		client.setIdClient(idClient);
+//    	criteria.setClient(client);
+//    	criteria.setResteAPayer(BigDecimal.ZERO);
+//		Example<EcheancierClient> echeancierExample = Example.of(criteria);
+//		Iterable<EcheancierClient> echeanciers = echeancierClientRepository.findAll(echeancierExample);
+//		for (EcheancierClient e : echeanciers) {
+//			result.add(e);
+//		}
+//		return result;
+//    }
     
     private EcheancierClient findEcheancierByMontant(BigDecimal montant) {
     	EcheancierClient criteria = new EcheancierClient();

@@ -31,6 +31,7 @@ public class OperationBancaire {
 	private BigDecimal montantDebit;
 	private BigDecimal montantCredit;
 	private StatutOperation statutOperation;
+	private TypeOperation typeOperation;
 	
 	
 	
