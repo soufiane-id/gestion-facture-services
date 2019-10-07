@@ -86,6 +86,8 @@ public class GestionFacturesServiceApplication implements CommandLineRunner{
 		
 		operationBancaireRepository.save(new OperationBancaire(null, new Date(), "Virement BOUCHERIE 4 CHEMINS", null, new BigDecimal(5600), StatutOperation.CREE, null));
 		operationBancaireRepository.save(new OperationBancaire(null, new Date(), "Virement BOUCHERIE LAMANA", null, new BigDecimal(2600), StatutOperation.CREE, null));
+		operationBancaireRepository.save(new OperationBancaire(null, new Date(), "Virement LES HALLES DE PARAY", null, new BigDecimal(5000), StatutOperation.CREE, null));
+		operationBancaireRepository.save(new OperationBancaire(null, new Date(), "Virement LES HALLES DE PARAY", null, new BigDecimal(100), StatutOperation.CREE, null));
 		reglementRepository.save(new Reglement(null, new BigDecimal(5400), client, null, soc1));
 		
 		echeancierClient.save(new EcheancierClient(null, new Date(), new Date(), "AF654641", client0, "GBufi re", "Chèque", "Décoché", new BigDecimal(5000), new BigDecimal(0), new BigDecimal(5000), new Date(), soc2));
@@ -93,6 +95,9 @@ public class GestionFacturesServiceApplication implements CommandLineRunner{
 		echeancierClient.save(new EcheancierClient(null, new Date(), new Date(), "AF465147", client0, "fdefuk ge", "Chèque", "Décoché", new BigDecimal(900), new BigDecimal(0), new BigDecimal(900), new Date(), soc2));
 		echeancierClient.save(new EcheancierClient(null, new Date(), new Date(), "AF465147", client0, "fdefuk ge", "Chèque", "Décoché", new BigDecimal(2900), new BigDecimal(0), new BigDecimal(2900), new Date(), soc1));
 		echeancierClient.save(new EcheancierClient(null, new Date(), new Date(), "AF465147", client0, "fdefuk ge", "Chèque", "Décoché", new BigDecimal(1800), new BigDecimal(0), new BigDecimal(1800), new Date(), soc1));
+		echeancierClient.save(new EcheancierClient(null, new Date(), new Date(), "AF465147", client22, "fdefuk ge", "Chèque", "Décoché", new BigDecimal(1800), new BigDecimal(0), new BigDecimal(1800), new Date(), soc2));
+		echeancierClient.save(new EcheancierClient(null, new Date(), new Date(), "AF465147", client22, "fdefuk ge", "Chèque", "Décoché", new BigDecimal(2400), new BigDecimal(0), new BigDecimal(2400), new Date(), soc2));
+		echeancierClient.save(new EcheancierClient(null, new Date(), new Date(), "AF465147", client22, "fdefuk ge", "Chèque", "Décoché", new BigDecimal(900), new BigDecimal(0), new BigDecimal(900), new Date(), soc2));
 		echeancierFournisseur.save(new EcheancierFournisseur(null, new Date(), new Date(), 3800D, 900D, 2900D, new Date(), fournisseur));
 		echeancierFournisseur.save(new EcheancierFournisseur(null, new Date(), new Date(), 4780D, 1400D, 2900D, new Date(), fournisseur2));
 	}

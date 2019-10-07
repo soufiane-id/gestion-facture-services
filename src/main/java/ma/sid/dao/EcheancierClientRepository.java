@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import ma.sid.entities.EcheancierClient;
 
@@ -15,12 +14,12 @@ import ma.sid.entities.EcheancierClient;
 @RepositoryRestResource
 public interface EcheancierClientRepository extends JpaRepository<EcheancierClient, Long> {
 
-	@Query("SELECT ech FROM EcheancierClient ech WHERE ech.resteAPayer > 0")
+	@Query("SELECT ech FROM EcheancierClient ech WHERE ech.resteAPayer != 0")
 	List<EcheancierClient> findAllEcheancesNonRegles();
 	
 	@Query("SELECT ech FROM EcheancierClient ech WHERE ech.resteAPayer = 0")
 	List<EcheancierClient> findAllEcheancesRegles();
 	
-	@Query("SELECT ech FROM EcheancierClient ech WHERE ech.client.idClient = :idClient AND ech.resteAPayer > 0")
+	@Query("SELECT ech FROM EcheancierClient ech WHERE ech.client.idClient = :idClient AND ech.resteAPayer != 0")
 	List<EcheancierClient> getEcheanciersByClient(@Param("idClient") Long idClient);
 }
