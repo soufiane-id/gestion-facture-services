@@ -23,6 +23,7 @@ import ma.sid.entities.OperationBancaire;
 import ma.sid.entities.Reglement;
 import ma.sid.entities.StatutOperation;
 import ma.sid.entities.TypeOperation;
+import ma.sid.entities.TypeReglement;
 
 @CrossOrigin( origins = "http://localhost:8081" )
 @RestController
@@ -41,6 +42,19 @@ public class ReglementService {
     List<Reglement> findAll() {
         return reglementRepository.findAll();
     }
+	
+	@PostMapping("/reglerOperationsCheque/{codeOperation}/{montantFacture}/{montantFactureSelectionne}")
+	public void reglerOperationsBancairesParCheque(@RequestBody List<EcheancierClient> echeanciers, @PathVariable Long codeOperation, @PathVariable BigDecimal montantFacture, @PathVariable BigDecimal montantFactureSelectionne) {
+		OperationBancaire operationBancaire = getOperationFromCode(codeOperation);
+		if(montantFacture.compareTo(montantFactureSelectionne) < 0) {
+			reglementPartiel(echeanciers, montantFacture, operationBancaire.getTypeOperation());
+		}else if(montantFacture.compareTo(montantFactureSelectionne) == 0) {
+			reglementExact(echeanciers, montantFacture, operationBancaire.getTypeOperation());
+		}else {
+			reglementAvecExcedent(echeanciers, montantFacture, operationBancaire.getTypeOperation());
+		}
+		validerOperation(operationBancaire);
+	}
 	
 	@PostMapping("/reglerOperations/{codeOperation}/{montantFactureSelectionne}")
 	public void reglerOperationsBancaires(@RequestBody List<EcheancierClient> echeanciers, @PathVariable Long codeOperation, @PathVariable BigDecimal montantFactureSelectionne) {

@@ -45,6 +45,7 @@ public class EcheancierClient {
 	private BigDecimal resteAPayer;
 	@JsonFormat(pattern="dd/MM/yy")
 	private Date dateReglementFacture;
+	private TypeReglement typeReglement;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SOCIETE_ID", nullable = false)
