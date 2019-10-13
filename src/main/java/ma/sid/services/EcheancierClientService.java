@@ -69,11 +69,12 @@ public class EcheancierClientService {
     	return echeancierClientRepository.getEcheanciersByClient(idClient);
     }
     
-    @GetMapping("/getEcheanciersByMontants/{montants}")
-    private List<EcheancierClient> getEcheanciersByMontants(@PathVariable List<BigDecimal> montants){
+    @GetMapping("/getEcheanciersByMontants/{montants}/{idClient}")
+    private List<EcheancierClient> getEcheanciersByMontants(@PathVariable List<BigDecimal> montants, 
+    		@PathVariable Long idClient){
     	List<EcheancierClient> resultat = new ArrayList<>();
     	for(BigDecimal montant: montants) {
-    		resultat.add(findEcheancierByMontant(montant));
+    		resultat.add(findEcheancierByMontant(montant, idClient));
     	}
     	return resultat;
     }
@@ -89,25 +90,12 @@ public class EcheancierClientService {
 		return null;
     }
     
-    
-//    private List<EcheancierClient> findEcheanciersByClient(Long idClient) {
-//    	List<EcheancierClient> result = new ArrayList<>();
-//    	EcheancierClient criteria = new EcheancierClient();
-//    	Client client = new Client();
-//		client.setIdClient(idClient);
-//    	criteria.setClient(client);
-//    	criteria.setResteAPayer(BigDecimal.ZERO);
-//		Example<EcheancierClient> echeancierExample = Example.of(criteria);
-//		Iterable<EcheancierClient> echeanciers = echeancierClientRepository.findAll(echeancierExample);
-//		for (EcheancierClient e : echeanciers) {
-//			result.add(e);
-//		}
-//		return result;
-//    }
-    
-    private EcheancierClient findEcheancierByMontant(BigDecimal montant) {
+    private EcheancierClient findEcheancierByMontant(BigDecimal montant, Long idClient) {
+    	Client client = new Client();
+		client.setIdClient(idClient);
     	EcheancierClient criteria = new EcheancierClient();
     	criteria.setMontantFacture(montant);
+    	criteria.setClient(client);
 		Example<EcheancierClient> echeancierExample = Example.of(criteria);
 		Iterable<EcheancierClient> echeanciers = echeancierClientRepository.findAll(echeancierExample);
 		for (EcheancierClient e : echeanciers) {

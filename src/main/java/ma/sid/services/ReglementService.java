@@ -19,11 +19,11 @@ import ma.sid.dao.OperationBancaireRepository;
 import ma.sid.dao.ReglementRepository;
 import ma.sid.entities.Banque;
 import ma.sid.entities.EcheancierClient;
+import ma.sid.entities.MoyenPaiement;
 import ma.sid.entities.OperationBancaire;
 import ma.sid.entities.Reglement;
 import ma.sid.entities.StatutOperation;
 import ma.sid.entities.TypeOperation;
-import ma.sid.entities.TypeReglement;
 
 @CrossOrigin( origins = "http://localhost:8081" )
 @RestController
@@ -80,7 +80,7 @@ public class ReglementService {
     			// On verse aussi l'excedent à la banque.
     			verserCompteSociete(echeanciers.get(i), typeOperation, montantFacture);
     			// TODO A confirmer pour la date decheance + numero document + et les autres champs !
-    			echeancierClientRepository.save(new EcheancierClient(null, new Date(), new Date(), echeanciers.get(i).getNumeroDocument(), echeanciers.get(i).getClient(), echeanciers.get(i).getCodeTiers(), null, null, montantFacture.negate(), BigDecimal.ZERO, montantFacture.negate(), new Date(), echeanciers.get(i).getSociete()));
+    			echeancierClientRepository.save(new EcheancierClient(null, new Date(), null, "EXCEDENT", echeanciers.get(i).getClient(), echeanciers.get(i).getCodeTiers(), null, null, montantFacture.negate(), BigDecimal.ZERO, montantFacture.negate(), new Date(), echeanciers.get(i).getSociete()));
     		}
     	}
     	
@@ -91,6 +91,7 @@ public class ReglementService {
 		for (EcheancierClient echeance : echeanciers) {
 			echeance.setMontantPaye(echeance.getMontantFacture());
 			echeance.setResteAPayer(BigDecimal.ZERO);
+			echeance.setMoyenPaiement(MoyenPaiement.VIREMENT);
 			//montantFacture = montantFacture.subtract(echeance.getMontantFacture());
 			echeancierClientRepository.save(echeance);
 			verserCompteSociete(echeance, typeOperation, echeance.getMontantFacture());

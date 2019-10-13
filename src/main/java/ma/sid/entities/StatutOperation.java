@@ -2,7 +2,7 @@ package ma.sid.entities;
 
 public enum StatutOperation {
 
-	CREE, 
+	A_TRAITER, 
 	EN_COURS,
 	VALIDE;
 }

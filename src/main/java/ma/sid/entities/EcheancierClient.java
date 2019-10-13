@@ -38,21 +38,20 @@ public class EcheancierClient {
 	@JoinColumn(name = "CLIENT_ID", nullable = false)
 	private Client client;
 	private String codeTiers;
-	private String moyenPaiement;
+	private MoyenPaiement moyenPaiement;
 	private String soldee;
 	private BigDecimal montantFacture;
 	private BigDecimal montantPaye;
 	private BigDecimal resteAPayer;
 	@JsonFormat(pattern="dd/MM/yy")
 	private Date dateReglementFacture;
-	private TypeReglement typeReglement;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SOCIETE_ID", nullable = false)
 	private Societe societe;
 
 	public EcheancierClient(Long idEcheancierClient, Date dateFacture, Date dateEcheance, String numeroDocument,
-			Client client, String codeTiers, String moyenPaiement, String soldee, BigDecimal montantFacture,
+			Client client, String codeTiers, MoyenPaiement moyenPaiement, String soldee, BigDecimal montantFacture,
 			BigDecimal montantPaye, BigDecimal resteAPayer, Date dateReglementFacture, Societe societe) {
 		super();
 		this.idEcheancierClient = idEcheancierClient;
