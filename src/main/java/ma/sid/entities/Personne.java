@@ -5,12 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import ma.sid.dto.enums.TypePersonne;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.math.BigDecimal;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -18,13 +15,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Banque {
+public class Personne {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idBanque;
-	private String nomBanque;
-	private BigDecimal soldeDebit;
-	private BigDecimal soldeCredit;
-	private BigDecimal montantStock;
+	private Long idPersonne;
+	@Column(unique = true)
+	private String nomPersonne;
+	@Enumerated(value = EnumType.STRING)
+	private TypePersonne typePersonne;
 }

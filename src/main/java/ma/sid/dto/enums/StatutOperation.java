@@ -1,0 +1,17 @@
+package ma.sid.dto.enums;
+
+public enum StatutOperation {
+
+	A_TRAITER,
+	EN_ATTENTE_FACTURE,
+	TRANSFERE,
+	VALIDE,
+	IMPAYE,
+	TELEPHONE,
+	SALAIRE,
+	AUDIGEC,
+	GAZOIL,
+	FRAIS_BANCAIRES,
+	POSTE,
+	CHARGES_SOCIALES;
+}
