@@ -108,13 +108,13 @@ public class HistoriqueClientServiceImpl implements HistoriqueClientService {
     }
 
     @Override
-    public Map<Integer, NoteClient> get6LastNotes(String nomClient, Date date) {
-        Map<Integer, NoteClient> result = new HashMap<>();
+    public Map<Integer, String> get6LastNotes(String nomClient, Date date) {
+        Map<Integer, String> result = new HashMap<>();
         int numeroSemaine = DateUtils.getWeekNumberOfYear(date);
         for(int i=0; i< 6; i++) {
             String semaineID = "S_" + numeroSemaine + "_" + DateUtils.toLocalDate(new Date()).getYear();
             NoteClient note = historiqueClientRepository.recupererNoteClientParSemaine(nomClient, semaineID);
-            result.put(numeroSemaine, note);
+            result.put(numeroSemaine, note != null ? note.getLibelle() : "");
             numeroSemaine -= 1;
         }
         return result;

@@ -14,5 +14,5 @@ public interface HistoriqueClientService {
 
     void synchronize(Date date);
 
-    Map<Integer, NoteClient> get6LastNotes(String nomClient, Date date);
+    Map<Integer, String> get6LastNotes(String nomClient, Date date);
 }

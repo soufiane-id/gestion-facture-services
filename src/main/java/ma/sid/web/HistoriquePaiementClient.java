@@ -34,7 +34,7 @@ public class HistoriquePaiementClient {
     }
 
     @GetMapping("/lastNotesClient")
-    public Map<Integer, NoteClient> get6LastNotes(String nomClient,@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date) {
+    public Map<Integer, String> get6LastNotes(String nomClient,@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date) {
         return historiqueClientService.get6LastNotes(nomClient, date);
     }
 
