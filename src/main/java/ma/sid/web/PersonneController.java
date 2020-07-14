@@ -22,9 +22,7 @@ public class PersonneController {
 	}
 
 	@GetMapping("/listClient")
-	public List<Personne> findAllClients() {
-		return personneService.recupererClients();
-	}
+	public List<Personne> findAllClients() { return personneService.recupererClients(); }
 
 	@PostMapping("/clients")
 	public ResponseEntity<Personne> ajouterClient(@RequestBody Personne personne) {

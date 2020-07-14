@@ -1,17 +1,15 @@
 package ma.sid;
 
 import ma.sid.dao.*;
-import ma.sid.entities.*;
+import ma.sid.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.math.BigDecimal;
-import java.util.Date;
 
 @SpringBootApplication
 public class GestionFacturesServiceApplication implements CommandLineRunner{
@@ -26,9 +24,16 @@ public class GestionFacturesServiceApplication implements CommandLineRunner{
 	private PersonneRepository personneRepository;
 	@Autowired
 	private OperationBancaireRepository operationBancaireRepository;
+	@Autowired
+	private UtilisateurService utilisateurService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(GestionFacturesServiceApplication.class, args);
+	}
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
@@ -46,6 +51,14 @@ public class GestionFacturesServiceApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
+		/*utilisateurService.saveRole(new Role(null,"Administrateur"));
+		utilisateurService.saveRole(new Role(null,"ADMIN"));
+		utilisateurService.saveUser(new Utilisateur(null,"user","1234", null));
+		utilisateurService.saveUser(new Utilisateur(null,"admin","123456", null));
+		utilisateurService.addRoleToUser("user", "USER");
+		utilisateurService.addRoleToUser("admin", "USER");
+		utilisateurService.addRoleToUser("admin", "ADMIN");*/
+
 		/*Banque bq1 = banqueRepository.save(new Banque(null, "Banque Teralal", BigDecimal.ZERO, BigDecimal.ZERO));
 		Banque bq2 = banqueRepository.save(new Banque(null, "Banque Viandes d'exception", BigDecimal.ZERO, BigDecimal.ZERO));
 		Societe soc1 = societeRepository.save(new Societe(null, "Teralal", bq1));

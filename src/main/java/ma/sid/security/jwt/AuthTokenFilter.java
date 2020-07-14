@@ -1,12 +1,6 @@
-package com.bezkoder.springjwt.security.jwt;
+package ma.sid.security.jwt;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import ma.sid.security.services.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +11,11 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.bezkoder.springjwt.security.services.UserDetailsServiceImpl;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
@@ -32,6 +30,17 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
+			response.addHeader("Access-Control-Allow-Origin",
+					"*");
+			response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, " +
+					"Content-Type, Access-Control-Request-Method, Access-Control-RequestHeaders,authorization");
+			response.addHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Origin, " +
+					"Access-Control-Allow-Credentials, authorization, user");
+			if(request.getMethod().equals("OPTIONS")){
+				response.setStatus(HttpServletResponse.SC_OK);
+				return;
+			}
+			else {
 			String jwt = parseJwt(request);
 			if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
 				String username = jwtUtils.getUserNameFromJwtToken(jwt);
@@ -42,6 +51,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Cannot set user authentication: {}", e);

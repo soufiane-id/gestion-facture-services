@@ -4,13 +4,10 @@ import ma.sid.dto.enums.NoteClient;
 import ma.sid.entities.HistoriqueClient;
 import ma.sid.entities.HistoriqueClientId;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 public interface HistoriqueClientRepository extends JpaRepository<HistoriqueClient, HistoriqueClientId> {

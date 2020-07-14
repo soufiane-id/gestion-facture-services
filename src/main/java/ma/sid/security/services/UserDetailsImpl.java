@@ -1,50 +1,48 @@
-package com.bezkoder.springjwt.security.services;
+package ma.sid.security.services;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import ma.sid.entities.Utilisateur;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.bezkoder.springjwt.models.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-
 	private String username;
-
-	private String email;
-
+	private String nom;
+	private String prenom;
 	@JsonIgnore
 	private String password;
-
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, String username, String email, String password,
+	public UserDetailsImpl(Long id, String nom, String prenom,  String username, String password,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
 		this.username = username;
-		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
 	}
 
-	public static UserDetailsImpl build(User user) {
+	public static UserDetailsImpl build(Utilisateur user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
+				.map(role -> new SimpleGrantedAuthority(role.getNomRole().name()))
 				.collect(Collectors.toList());
 
 		return new UserDetailsImpl(
-				user.getId(), 
-				user.getUsername(), 
-				user.getEmail(),
-				user.getPassword(), 
+				user.getId(),
+				user.getNom(),
+				user.getPrenom(),
+				user.getUsername(),
+				user.getPassword(),
 				authorities);
 	}
 
@@ -57,8 +55,12 @@ public class UserDetailsImpl implements UserDetails {
 		return id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getNom() {
+		return nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
 	}
 
 	@Override

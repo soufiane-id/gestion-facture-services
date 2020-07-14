@@ -1,21 +1,18 @@
 package ma.sid.dao;
 
 import ma.sid.entities.Echeancier;
-import ma.sid.entities.OperationBancaire;
 import ma.sid.entities.Personne;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @CrossOrigin( origins = "http://localhost:8081" )
-@RepositoryRestResource
+//@RepositoryRestResource
 public interface EcheancierRepository extends JpaRepository<Echeancier, Long> {
 
 	@Query("SELECT ech FROM Echeancier ech WHERE ech.resteAPayer = 0")

@@ -3,11 +3,10 @@ package ma.sid.dao;
 import ma.sid.entities.Personne;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource
+//@RepositoryRestResource
 public interface PersonneRepository extends JpaRepository<Personne, Long> {
 	
 	@Query("SELECT p FROM Personne p WHERE p.typePersonne = 'CLIENT' ")
