@@ -50,8 +50,8 @@ public class ReglementController {
 	}
 
 	@PostMapping("/reglerImpaye/{codeOperation}")
-	public void reglerImpaye(@RequestBody Echeancier echeancier, @PathVariable Long codeOperation) {
-		reglementService.reglerImpaye(echeancier, codeOperation);
+	public void reglerImpaye(@RequestBody List<Echeancier> echeanciers, @PathVariable Long codeOperation) {
+		reglementService.reglerImpaye(echeanciers, codeOperation);
 	}
 
 }

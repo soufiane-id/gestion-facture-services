@@ -20,5 +20,5 @@ public interface ReglementService {
 
     void reglerChargesFixes(ChargeFixe chargeFixe);
 
-    void reglerImpaye(Echeancier echeancier, Long codeOperation);
+    void reglerImpaye(List<Echeancier> echeanciers, Long codeOperation);
 }

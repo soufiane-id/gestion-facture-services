@@ -79,20 +79,22 @@ public class ReglementServiceImpl implements ReglementService{
     }
 
     @Override
-    public void reglerImpaye(Echeancier echeancier, Long codeOperation) {
-        Echeancier impaye = new Echeancier(null, echeancier.getDateFacture(), echeancier.getDateEcheance(), echeancier.getNumeroDocument() + "-IMPAYE-",
-                echeancier.getPersonne(), null, null, null, echeancier.getMontantFacture(),
-                BigDecimal.ZERO, echeancier.getMontantFacture(), null, echeancier.getSociete());
+    public void reglerImpaye(List<Echeancier> echeanciers, Long codeOperation) {
+        for(Echeancier echeancier : echeanciers) {
+            Echeancier impaye = new Echeancier(null, echeancier.getDateFacture(), echeancier.getDateEcheance(), echeancier.getNumeroDocument() + "-IMPAYE-",
+                    echeancier.getPersonne(), null, null, null, echeancier.getMontantFacture(),
+                    BigDecimal.ZERO, echeancier.getMontantFacture(), null, echeancier.getSociete());
 
-        OperationBancaire operationBancaire = operationBancaireRepository.getOne(codeOperation);
+            OperationBancaire operationBancaire = operationBancaireRepository.getOne(codeOperation);
 
-        tracerPaiementEtVerserCompte(echeancier.getSociete().getBanque().getIdBanque(), TypeOperation.DEBIT, operationBancaire.getMontantDebit().abs(),
-                echeancier.getPersonne(), operationBancaire.getDateOperation(), echeancier.getSociete().getIdSociete());
-        //verserCompteSociete(echeancier.getSociete().getBanque().getIdBanque(), TypeOperation.DEBIT, operationBancaire.getMontantDebit().abs());
+            // On trace le paiement avec le montant négatif
+            tracerPaiement(echeancier.getPersonne(), operationBancaire.getDateOperation(), echeancier.getSociete().getIdSociete(), echeancier.getMontantPaye().negate());
+            verserCompteSociete(echeancier.getSociete().getBanque().getIdBanque(), TypeOperation.DEBIT, echeancier.getMontantPaye());
 
-        validerOperation(operationBancaire, StatutOperation.IMPAYE);
+            validerOperation(operationBancaire, StatutOperation.IMPAYE);
 
-        echeancierRepository.save(impaye);
+            echeancierRepository.save(impaye);
+        }
     }
 
     /**

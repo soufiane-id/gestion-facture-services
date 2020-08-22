@@ -13,4 +13,6 @@ public class RegisterForm {
     private String username;
     private String password;
     private String repassword;
+    private Boolean enabled;
+    private String nomRole;
 }

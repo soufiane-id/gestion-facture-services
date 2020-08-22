@@ -1,7 +1,7 @@
 package ma.sid;
 
 import ma.sid.dao.*;
-import ma.sid.services.UtilisateurService;
+import ma.sid.services.UtilisateurRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +25,7 @@ public class GestionFacturesServiceApplication implements CommandLineRunner{
 	@Autowired
 	private OperationBancaireRepository operationBancaireRepository;
 	@Autowired
-	private UtilisateurService utilisateurService;
+	private UtilisateurRoleService utilisateurService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(GestionFacturesServiceApplication.class, args);

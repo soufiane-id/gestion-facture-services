@@ -1,20 +1,38 @@
 package ma.sid.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ma.sid.dto.enums.RoleEnum;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
     @Id
     @GeneratedValue
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private RoleEnum nomRole;
+    private String nomRole;
+    @ManyToMany(fetch= FetchType.EAGER, cascade=CascadeType.ALL)
+    private Set<EcranAutorise> ecranAutorise = new HashSet<>();
+
+    public void addEcransAutorises(Set<EcranAutorise> ecrans) {
+        this.ecranAutorise.clear();
+        this.ecranAutorise.addAll(ecrans);
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", nomRole=" + nomRole +
+                ", ecranAutorise=" + ecranAutorise +
+                "}";
+    }
 }

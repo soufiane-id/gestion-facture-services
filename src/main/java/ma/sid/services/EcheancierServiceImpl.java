@@ -142,15 +142,20 @@ public class EcheancierServiceImpl implements EcheancierService{
     }
 
     @Override
-    public Echeancier recupererEcheanciersParNumeroDocument(String numeroDocument) {
-        List<Echeancier> echeanciers = echeancierRepository.findByNumeroDocument(numeroDocument);
-        if(echeanciers == null || echeanciers.isEmpty()) {
-            throw new NonUniqueDocumentException("Aucune facture trouvée. Veuillez réessayer");
+    public List<Echeancier> recupererEcheanciersParNumerosDocument(List<String> numerosDocument) {
+        List<Echeancier> echeanciers = new ArrayList<>();
+        Echeancier ech;
+        for(String numeroDocument: numerosDocument) {
+            ech = echeancierRepository.findByNumeroDocument(numeroDocument);
+            if(ech == null) {
+                throw new NonUniqueDocumentException("Aucune facture trouvée. Veuillez réessayer");
+            }
+            echeanciers.add(ech);
+            /*if(echeanciers.size() > 1){
+                throw new NonUniqueDocumentException("Plusieurs documents correspondent à votre requête. Veuillez réessayer");
+            }*/
         }
-        if(echeanciers.size() > 1){
-            throw new NonUniqueDocumentException("Plusieurs documents correspondent à votre requête. Veuillez réessayer");
-        }
-        return echeanciers.get(0);
+        return echeanciers;
     }
 
     @Override

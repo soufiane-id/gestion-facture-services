@@ -1,7 +1,7 @@
 package ma.sid.security.services;
 
 import ma.sid.entities.Utilisateur;
-import ma.sid.services.UtilisateurService;
+import ma.sid.services.UtilisateurRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
-	private UtilisateurService utilisateurService;
+	private UtilisateurRoleService utilisateurService;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Utilisateur user = utilisateurService.findUserByUsername(username);

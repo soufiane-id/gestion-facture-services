@@ -1,7 +1,6 @@
 package ma.sid.services;
 
 import ma.sid.entities.Echeancier;
-import ma.sid.entities.OperationBancaire;
 import ma.sid.entities.Personne;
 
 import java.math.BigDecimal;
@@ -36,7 +35,7 @@ public interface EcheancierService {
 
     BigDecimal recupererDettesFrs();
 
-    Echeancier recupererEcheanciersParNumeroDocument(String numeroDocument);
+    List<Echeancier> recupererEcheanciersParNumerosDocument(List<String> numeroDocument);
 
     BigDecimal recupererAchatsClientParDate(Personne client, Date startWeek, Date endWeek);
 }

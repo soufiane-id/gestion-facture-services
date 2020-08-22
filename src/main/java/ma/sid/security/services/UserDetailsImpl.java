@@ -20,21 +20,23 @@ public class UserDetailsImpl implements UserDetails {
 	private String prenom;
 	@JsonIgnore
 	private String password;
+	private Boolean isEnabled;
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Long id, String nom, String prenom,  String username, String password,
-			Collection<? extends GrantedAuthority> authorities) {
+			Boolean isEnabled, Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.username = username;
 		this.password = password;
+		this.isEnabled = isEnabled;
 		this.authorities = authorities;
 	}
 
 	public static UserDetailsImpl build(Utilisateur user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getNomRole().name()))
+				.map(role -> new SimpleGrantedAuthority(role.getNomRole()))
 				.collect(Collectors.toList());
 
 		return new UserDetailsImpl(
@@ -43,6 +45,7 @@ public class UserDetailsImpl implements UserDetails {
 				user.getPrenom(),
 				user.getUsername(),
 				user.getPassword(),
+				user.getEnabled(),
 				authorities);
 	}
 
@@ -73,6 +76,10 @@ public class UserDetailsImpl implements UserDetails {
 		return username;
 	}
 
+	public Boolean getEnabled() {
+		return isEnabled;
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -90,7 +97,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return isEnabled;
 	}
 
 	@Override

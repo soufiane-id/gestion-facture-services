@@ -47,7 +47,7 @@ public interface EcheancierRepository extends JpaRepository<Echeancier, Long> {
 	
 	//List<Echeancier> findAllEcheancesClient(TypePersonne typePersonne);
 
-	List<Echeancier> findByNumeroDocument(String numeroDocument);
+	Echeancier findByNumeroDocument(String numeroDocument);
 
 	List<Echeancier> findAllByPersonneAndDateFactureGreaterThanEqualAndDateFactureLessThanEqual(Personne client, Date startWeek, Date endWeek);
 	

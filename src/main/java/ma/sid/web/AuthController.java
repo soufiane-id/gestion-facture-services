@@ -1,14 +1,13 @@
 package ma.sid.web;
 
 import ma.sid.dto.RegisterForm;
-import ma.sid.dto.enums.RoleEnum;
 import ma.sid.entities.Utilisateur;
 import ma.sid.payload.request.LoginRequest;
 import ma.sid.payload.response.JwtResponse;
 import ma.sid.payload.response.MessageResponse;
 import ma.sid.security.jwt.JwtUtils;
 import ma.sid.security.services.UserDetailsImpl;
-import ma.sid.services.UtilisateurService;
+import ma.sid.services.UtilisateurRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class AuthController {
-    private UtilisateurService utilisateurService;
+    private UtilisateurRoleService utilisateurService;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -33,7 +32,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @Autowired
-    public AuthController(UtilisateurService utilisateurService){
+    public AuthController(UtilisateurRoleService utilisateurService){
         this.utilisateurService = utilisateurService;
     }
 
@@ -56,8 +55,9 @@ public class AuthController {
         u.setPassword(password);
         u.setNom(registerForm.getNom());
         u.setPrenom(registerForm.getPrenom());
+        u.setEnabled(registerForm.getEnabled());
         utilisateurService.saveUser(u);
-        utilisateurService.addRoleToUser(username, RoleEnum.USER);
+        utilisateurService.addRoleToUser(username, registerForm.getNomRole());
         return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
     }
 

@@ -98,10 +98,10 @@ public class EcheancierController {
 		return echeancierService.recupererEcheanciersParMontants(montants, idPersonne);
 	}
 
-	@GetMapping("/getEcheanciersByDocument")
-	public ResponseEntity<Echeancier> getFactureByNumeroDocument(String numeroDocument){
+	@GetMapping("/getEcheanciersByDocument/{numerosDocument}")
+	public ResponseEntity<List<Echeancier>> getFactureByNumeroDocument(@PathVariable List<String> numerosDocument){
 		try {
-			return new ResponseEntity<>(echeancierService.recupererEcheanciersParNumeroDocument(numeroDocument.trim()),
+			return new ResponseEntity<>(echeancierService.recupererEcheanciersParNumerosDocument(numerosDocument),
 					HttpStatus.OK);
 		}catch (NonUniqueDocumentException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

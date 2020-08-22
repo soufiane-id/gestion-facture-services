@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -244,7 +245,7 @@ public class ReglementVirementServiceImplIT {
     public void whenReglementImpaye() {
         Echeancier facture = new Echeancier(1L, new Date(), new Date(), "AF654641", client, "GBufi re", null, "Décoché", new BigDecimal("2568.14"), BigDecimal.ZERO, new BigDecimal("2568.14"), new Date(), societe);
 
-        reglementService.reglerImpaye(facture, 2L);
+        reglementService.reglerImpaye(Arrays.asList(facture), 2L);
 
         assertThat(excedent.get(0).getResteAPayer()).isEqualTo(operationDebit.getMontantDebit().negate());
         assertThat(excedent.get(0).getMontantFacture()).isEqualTo(operationDebit.getMontantDebit().negate());
