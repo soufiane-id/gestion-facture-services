@@ -22,4 +22,6 @@ public interface OperationBancaireService {
     List<OperationBancaire> recupererOperationChargesFixes();
 
     List<OperationBancaire> recupererOperationImpayes();
+
+    void supprimerOperation(Long codeOperation);
 }

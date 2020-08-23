@@ -3,6 +3,7 @@ package ma.sid.web;
 import ma.sid.entities.OperationBancaire;
 import ma.sid.services.OperationBancaireService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,4 +63,11 @@ public class OperationBancaireController {
 	List<OperationBancaire> integrerOperations(@RequestBody List<OperationBancaire> operations) throws Exception {
 		return operationBancaireService.integererOperations(operations);
 	}
+
+	@DeleteMapping("/deleteOperation/{codeOperation}")
+	public ResponseEntity<Void> deleteOperation(@PathVariable Long codeOperation) {
+		operationBancaireService.supprimerOperation(codeOperation);
+		return ResponseEntity.ok().build();
+	}
+
 }

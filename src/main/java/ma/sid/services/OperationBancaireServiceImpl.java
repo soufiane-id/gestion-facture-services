@@ -60,6 +60,11 @@ public class OperationBancaireServiceImpl implements OperationBancaireService{
     }
 
     @Override
+    public void supprimerOperation(Long codeOperation) {
+        operationBancaireRepository.deleteById(codeOperation);
+    }
+
+    @Override
     public OperationBancaire ajouterOperationBancaire(OperationBancaire operation) {
         operation.setStatutOperation(StatutOperation.A_TRAITER);
         return operationBancaireRepository.save(operation);
